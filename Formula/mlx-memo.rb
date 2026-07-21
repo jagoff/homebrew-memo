@@ -29,6 +29,8 @@ class MlxMemo < Formula
   depends_on :macos
   depends_on "python@3.13"
 
+  preserve_rpath
+
   # We let pip resolve the dep tree at install time rather than
   # vendoring every `resource` block (mlx, mlx-lm, fastmcp, sqlite-vec,
   # frontmatter, watchdog, etc. — ~30 deps). This is fine for a
@@ -44,7 +46,7 @@ class MlxMemo < Formula
   test do
     assert_match "memo, version", shell_output("#{bin}/memo --version")
     assert_match "Usage:", shell_output("#{bin}/memo --help")
-    # MCP server entry point must be importable too.
-    system bin/"memo-mcp", "--help"
+    # Import the MCP entry point without starting its blocking stdio loop.
+    system libexec/"bin/python", "-c", "import memo.server"
   end
 end
