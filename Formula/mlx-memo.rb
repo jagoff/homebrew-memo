@@ -17,6 +17,8 @@
 # `depends_on arch: :arm64` so brew refuses early.
 
 class MlxMemo < Formula
+  include Language::Python::Virtualenv
+
   desc "Local MCP memory for AI agents — MLX-native, sqlite-vec, markdown vault"
   homepage "https://github.com/jagoff/memo"
   url "https://files.pythonhosted.org/packages/e1/d1/162faaba41ec4de5cc2a439c2592a7db5fae5e1962f358047f1ed7852861/mlx_memo-3.8.2.tar.gz"
