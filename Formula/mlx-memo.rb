@@ -34,8 +34,11 @@ class MlxMemo < Formula
   # frontmatter, watchdog, etc. — ~30 deps). This is fine for a
   # personal tap; homebrew-core would require explicit resources.
   def install
-    venv = virtualenv_create(libexec, "python3.13")
-    venv.pip_install_and_link buildpath
+    virtualenv_create(libexec, "python3.13", system_site_packages: false)
+    system "python3.13", "-m", "pip", "--python=#{libexec}/bin/python",
+           "install", "--no-compile", buildpath
+    bin.install_symlink libexec/"bin/memo"
+    bin.install_symlink libexec/"bin/memo-mcp"
   end
 
   test do
